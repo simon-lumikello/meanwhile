@@ -25,9 +25,10 @@ import {
 } from './ambientPolicy'
 
 const AWAKE_MS = 30_000
-// After the dashboard loads, the ambient screen waits this long without any interaction,
-// so opening the dashboard (to reach the settings, say) doesn't flash it at the first mouse move.
-const STARTUP_GRACE_MS = 30_000
+// After the dashboard loads, and each time the ambient screen becomes eligible again (night hours
+// start, the last event ends, the user steps back to today), it waits this long without any
+// interaction, so it never appears under someone using the dashboard and flashes at the next mouse move.
+const ENTRY_GRACE_MS = 30_000
 const ACTIVITY_EVENTS = ['mousemove', 'keydown', 'touchstart', 'pointerdown'] as const
 
 export interface AmbientControllerProps {
@@ -106,7 +107,7 @@ export function AmbientController({
   const [rawIsTemporarilyAwake, setRawIsTemporarilyAwake] = useState(false)
   const [rawIsExiting, setRawIsExiting] = useState(false)
   const [isCardGateOpen, setIsCardGateOpen] = useState(false)
-  const [isStartupGraceOver, setIsStartupGraceOver] = useState(false)
+  const [isEntryGraceOver, setIsEntryGraceOver] = useState(false)
   const awakeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const wakeTransitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isWakingRef = useRef(false)
@@ -119,8 +120,19 @@ export function AmbientController({
   if (suppressed && !rawIsTemporarilyAwake) setRawIsTemporarilyAwake(true)
 
   const initialState = calculateDashboardAmbientState({ enabled, startHour, endHour, currentTime, dimAfterLastEvent, hasRemainingEvents })
+
+  // Re-arm the entry grace during render, not in an effect: an effect would first commit a render that shows the screen.
+  // The rest of this render still runs (and its state updates, like the card gate's, still apply), so it uses the re-armed value.
+  const [wasEligible, setWasEligible] = useState(initialState.isEligibleToShow)
+  const becameEligible = initialState.isEligibleToShow && !wasEligible
+  if (initialState.isEligibleToShow !== wasEligible) {
+    setWasEligible(initialState.isEligibleToShow)
+    if (becameEligible) setIsEntryGraceOver(false)
+  }
+  const isGraceOver = isEntryGraceOver && !becameEligible
+
   const isWokenByUser = rawIsTemporarilyAwake && initialState.isEligibleToShow
-  const isTemporarilyAwake = (rawIsTemporarilyAwake || suppressed || !isStartupGraceOver) &&initialState.isEligibleToShow
+  const isTemporarilyAwake = (rawIsTemporarilyAwake || suppressed || !isGraceOver) && initialState.isEligibleToShow
   const isExiting = rawIsExiting && initialState.isEligibleToShow
   const ambientState = calculateDashboardAmbientState({ enabled, startHour, endHour, currentTime, dimAfterLastEvent, hasRemainingEvents, isTemporarilyAwake })
 
@@ -153,18 +165,18 @@ export function AmbientController({
   }, [])
 
   useEffect(() => {
-    if (isStartupGraceOver) return
-    let timer = setTimeout(() => setIsStartupGraceOver(true), STARTUP_GRACE_MS)
+    if (isEntryGraceOver || !initialState.isEligibleToShow) return
+    let timer = setTimeout(() => setIsEntryGraceOver(true), ENTRY_GRACE_MS)
     const onActivity = () => {
       clearTimeout(timer)
-      timer = setTimeout(() => setIsStartupGraceOver(true), STARTUP_GRACE_MS)
+      timer = setTimeout(() => setIsEntryGraceOver(true), ENTRY_GRACE_MS)
     }
     ACTIVITY_EVENTS.forEach(type => window.addEventListener(type, onActivity, { passive: true }))
     return () => {
       clearTimeout(timer)
       ACTIVITY_EVENTS.forEach(type => window.removeEventListener(type, onActivity))
     }
-  }, [isStartupGraceOver])
+  }, [isEntryGraceOver, initialState.isEligibleToShow])
 
   const handleWake = useCallback(() => {
     if (!shouldHandleDashboardWake(ambientState.isEligibleToShow, isLockScreenShown, isWakingRef.current)) return

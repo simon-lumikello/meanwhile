@@ -71,6 +71,10 @@ Product background: [README.md](./README.md) and [DESIGN.md](./DESIGN.md).
   or events resume, eligibility flips to false and tears down the listeners and wake timers, so
   morning mouse movement never flashes the screen.
 - **Wake:** any touch, keypress, or mouse movement wakes the dashboard for 30 seconds.
+- **Entry grace:** after loading, and every time the screen becomes eligible again (night hours
+  start, the last event ends, the user steps back to today from another day), it shows only after
+  30 seconds without input, so it never appears under someone using the dashboard. The grace re-arms
+  during render, never in an effect, and its activity listeners run only while eligible.
 
 ## Radar composition
 - The dashboard composes the library's `RadarViewport` in `AmbientRadarCard.tsx` (night screen:

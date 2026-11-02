@@ -334,6 +334,7 @@ export interface WeatherProvider {
   - **Card Readiness Gating & Fade Transitions:** Guards ambient mounting (`shouldMountDimmer`) to ensure cards do not flash before weather and radar data are prepared. Smooth hardware-accelerated CSS keyframe animations (`animate-dimmer-fade-in`, `animate-dimmer-fade-out`) handle mounting and exit transitions.
   - **Wake Listener Gating & Anti-Flash Guards:** Wake listeners (`mousemove`, `keydown`, `touchstart`, `pointerdown`) are strictly attached only when the lock screen is actively eligible and displayed (`shouldListenForWake`). Wake handlers reject inputs when unmounted or during daytime (`shouldHandleWake`). When night mode concludes upon morning rollover (07:00), ambient eligibility flips to false, instantly tearing down wake listeners and pending timers so daytime mouse movement never causes a lock screen flash glitch.
   - Touch or mouse movement temporarily wakes the dashboard for 30 seconds.
+  - **Entry Grace:** After loading, and whenever the lock screen becomes eligible again (night hours begin, the last event ends, or the user steps back to today from another day), it appears only after 30 seconds without input, so it never interrupts someone using the dashboard.
 
 ---
 
