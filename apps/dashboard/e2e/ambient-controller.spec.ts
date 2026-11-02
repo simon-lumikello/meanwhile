@@ -47,7 +47,11 @@ test.describe('Dashboard ambient controller', () => {
     await page.mouse.move(400, 400)
     await expect(controller).not.toBeVisible()
 
+    // Becoming eligible again waits for 30 idle seconds, as on load.
     await page.evaluate(() => window.setAmbientScenario?.({ time: '2026-09-22T00:01:00+03:00' }))
+    await page.clock.fastForward(1_000)
+    await expect(controller).not.toBeVisible()
+    await page.clock.fastForward(30_001)
     await expect(controller).toBeVisible()
 
     await page.evaluate(() => window.setAmbientScenario?.({ mounted: false }))
@@ -56,6 +60,51 @@ test.describe('Dashboard ambient controller', () => {
       const counts = window.ambientListenerCounts
       return counts ? counts.removed >= counts.added : false
     })).toBe(true)
+  })
+
+  test('does not flash when returning to today from another day', async ({ page }) => {
+    const controller = page.getByTestId('dashboard-ambient-controller')
+    // Daytime, and today's last event is over.
+    await page.evaluate(() => window.setAmbientScenario?.({ time: '2026-09-21T14:00:00+03:00', hasRemainingEvents: false }))
+    await page.clock.fastForward(30_001)
+    await expect(controller).toBeVisible()
+    await page.mouse.move(200, 200)
+    await page.clock.fastForward(350)
+    await expect(controller).not.toBeVisible()
+
+    // Viewing tomorrow, which has events, then going back to today.
+    await page.evaluate(() => window.setAmbientScenario?.({ hasRemainingEvents: true }))
+    await page.mouse.move(250, 250)
+    await page.clock.fastForward(5_000)
+    await page.evaluate(() => { window.ambientShownCount = 0 })
+    await page.evaluate(() => window.setAmbientScenario?.({ hasRemainingEvents: false }))
+    await page.mouse.move(300, 300)
+    await page.clock.fastForward(1_000)
+    await expect(controller).not.toBeVisible()
+    expect(await page.evaluate(() => window.ambientShownCount)).toBe(0)
+
+    await page.clock.fastForward(30_001)
+    await expect(controller).toBeVisible()
+  })
+
+  test('waits for 30 idle seconds when night hours start mid-interaction', async ({ page }) => {
+    const controller = page.getByTestId('dashboard-ambient-controller')
+    await page.clock.fastForward(30_001)
+    await expect(controller).toBeVisible()
+    await page.evaluate(() => window.setAmbientScenario?.({ time: '2026-09-21T20:59:50+03:00' }))
+    await expect(controller).not.toBeVisible()
+    await page.evaluate(() => { window.ambientShownCount = 0 })
+
+    await page.mouse.move(200, 200)
+    await page.evaluate(() => window.setAmbientScenario?.({ time: '2026-09-21T21:00:00+03:00' }))
+    await page.clock.fastForward(20_000)
+    await page.mouse.move(250, 250)
+    await page.clock.fastForward(20_000)
+    await expect(controller).not.toBeVisible()
+    expect(await page.evaluate(() => window.ambientShownCount)).toBe(0)
+
+    await page.clock.fastForward(10_001)
+    await expect(controller).toBeVisible()
   })
 
   test('stays on the lock screen at midnight while the new day forecasts load', async ({ page }) => {
