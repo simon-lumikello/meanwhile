@@ -1,0 +1,32 @@
+{
+  "name": "@simon-lumikello/meanwhile-ambient",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./core": "./src/core.ts",
+    "./react": "./src/react.ts",
+    "./style.css": "./src/ambient.css"
+  },
+  "dependencies": {
+    "@simon-lumikello/meanwhile-weather": "workspace:*",
+    "date-fns": "^4.4.0",
+    "lucide-react": "^1.46.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  },
+  "scripts": {
+    "browser:dev": "bun vite --config vite.browser.config.ts",
+    "browser:build": "bun vite build --config vite.browser.config.ts",
+    "browser:preview": "bun vite preview --config vite.browser.config.ts",
+    "test:e2e": "bun playwright test",
+    "test:e2e:production": "bun run browser:build && bun playwright test -c playwright.production.config.ts"
+  },
+  "license": "MIT",
+  "author": "Simon Lumikello"
+}

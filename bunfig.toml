@@ -1,0 +1,3 @@
+[test]
+# Unit tests only: the Playwright browser suites (`*.spec.ts`) run under Playwright.
+pathIgnorePatterns = ["**/*.spec.ts"]

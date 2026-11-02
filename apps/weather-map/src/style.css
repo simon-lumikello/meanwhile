@@ -1,0 +1,29 @@
+@import "tailwindcss";
+/* Library components use Tailwind utilities; scan their source (workspace packages in ../../../packages). */
+@source "../../../packages/radar/src";
+@source "../../../packages/ui/src";
+
+/* Shared UI components style dark mode with `dark:`; the map is always dark (`.dark` on the app). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Match the dashboard's typography so the shared components render identically. */
+@theme {
+  --font-sans: 'Inter', 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root { color-scheme: dark; font-family: var(--font-sans); background: #07111f; }
+html, body, #root { width: 100%; height: 100%; overflow: hidden; }
+body { margin: 0; }
+.radar-app { position: fixed; inset: 0; width: 100vw; height: 100dvh; overflow: hidden; background: #07111f; color: #f8fafc; }
+.radar-app .full-radar { position: absolute; inset: 0; width: 100% !important; height: 100% !important; }
+.radar-settings-field { display: grid; gap: .42rem; color: #dbeafe; font-size: .84rem; font-weight: 650; }
+.radar-settings-field > span { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+.radar-settings-toggles { display: grid; gap: .55rem; }
+.radar-settings-toggles label { display: flex; align-items: center; gap: .7rem; border: 1px solid rgb(71 85 105 / .75); border-radius: .68rem; padding: .66rem .72rem; background: rgb(15 23 42 / .52); cursor: pointer; }
+.radar-settings-toggles label:hover { border-color: #64748b; }
+.radar-settings-toggles input { width: 1rem; height: 1rem; accent-color: #60a5fa; }
+.radar-settings-toggles span { display: grid; gap: .12rem; }
+.radar-settings-toggles strong { color: #e2e8f0; font-size: .84rem; }
+.radar-settings-toggles small { color: #8fa1bd; font-size: .74rem; line-height: 1.3; }
+.unavailable { max-width: 18rem; margin: 0; padding: .65rem .75rem; border: 1px solid rgb(251 113 133 / .62); border-radius: .65rem; background: rgb(127 29 29 / .9); color: #fff1f2; box-shadow: 0 8px 24px rgb(0 0 0 / .25); }

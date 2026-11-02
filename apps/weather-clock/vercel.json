@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "bunVersion": "1.4.x",
+  "installCommand": "bun install --frozen-lockfile",
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist",
+  "headers": [{ "source": "/(index.html|version.json)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }],
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}

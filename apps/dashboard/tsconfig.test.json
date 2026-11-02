@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "bun-types",
+      "vite/client"
+    ],
+    "paths": {
+      "@dashboard": [
+        "./src/index.ts"
+      ],
+      "@dashboard/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "tests"
+  ]
+}

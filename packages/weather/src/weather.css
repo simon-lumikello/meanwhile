@@ -1,0 +1,51 @@
+.weather-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.weather-icon--sun {
+  color: #f59e0b;
+}
+
+.weather-icon--moon {
+  color: #818cf8;
+}
+
+.weather-icon--cloud {
+  color: #64748b;
+}
+
+.weather-icon--rain-light {
+  color: #0ea5e9;
+}
+
+.weather-icon--rain {
+  color: #2563eb;
+}
+
+.weather-icon--thunder {
+  color: #f59e0b;
+}
+
+.weather-icon--snow {
+  color: #06b6d4;
+}
+
+@media (prefers-color-scheme: dark) {
+  .weather-icon--sun,
+  .weather-icon--thunder {
+    color: #fbbf24;
+  }
+
+  .weather-icon--moon {
+    color: #a5b4fc;
+  }
+
+  .weather-icon--cloud {
+    color: #94a3b8;
+  }
+
+  .weather-icon--snow {
+    color: #a5f3fc;
+  }
+}

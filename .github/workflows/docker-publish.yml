@@ -1,0 +1,91 @@
+name: Publish Docker image to GHCR
+
+# Merges to main only redeploy Vercel. The image is published when a GitHub release is published
+# (`gh release create vX.Y.Z --target main --generate-notes`), so self-hosters
+# get a deliberate version rather than every merge. The release's commit was already fully validated
+# by ci.yml on its pull request, so this re-runs only the fast checks as a safety net.
+on:
+  release:
+    types:
+      - published
+  # Rebuilds a release's image: `gh workflow run docker-publish.yml --ref vX.Y.Z`. Run from a
+  # branch, it publishes only the sha-* tag.
+  workflow_dispatch:
+
+concurrency:
+  group: docker-publish-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  checks:
+    name: Fast checks
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: bun run build:dashboard
+      - run: bun check --no-pretty
+      - run: bun run lint
+      - run: bun test
+      - run: bun run check:boundaries
+
+  build-and-push:
+    needs: checks
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          # 'latest' follows the newest release: added for every non-prerelease semver tag.
+          flavor: |
+            latest=auto
+          tags: |
+            # Tag releases with semver (e.g. v1.2.3 → 1.2.3, 1.2)
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            # Short commit SHA for traceability
+            type=sha,prefix=sha-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Build for both amd64 (servers/desktops) and arm64 (Raspberry Pi 4/5)
+          platforms: linux/amd64,linux/arm64
+          # Reuse unchanged layers (e.g. dependency install) across runs
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

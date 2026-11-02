@@ -1,0 +1,45 @@
+{
+  "name": "meanwhile",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "bun@1.4.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun --cwd=apps/dashboard run dev",
+    "dev:weather-map": "bun --cwd=apps/weather-map run dev",
+    "dev:weather-clock": "bun --cwd=apps/weather-clock run dev",
+    "build": "bun run build:dashboard && bun run build:weather-map && bun run build:weather-clock",
+    "build:dashboard": "bun --cwd=apps/dashboard run build",
+    "build:weather-map": "bun --cwd=apps/weather-map run build",
+    "build:weather-clock": "bun --cwd=apps/weather-clock run build",
+    "build:server": "bun build apps/dashboard/server/index.ts --target=node --outfile=apps/dashboard/server-dist/server.js",
+    "test": "bun test",
+    "test:dashboard:e2e": "bun run build:dashboard && bun --cwd=apps/dashboard run test:e2e",
+    "test:dashboard:ambient-controller": "bun --cwd=apps/dashboard run test:ambient-controller",
+    "test:weather-map:e2e": "bun run build:weather-map && bun --cwd=apps/weather-map run test:e2e",
+    "test:weather-clock:e2e": "bun run build:weather-clock && bun --cwd=apps/weather-clock run test:e2e",
+    "test:libraries:e2e": "bun --cwd=packages/radar run test:e2e:production && bun --cwd=packages/ambient run test:e2e:production",
+    "test:radar:visual": "bun --cwd=packages/radar run test:visual",
+    "check:boundaries": "bun scripts/check-boundaries.ts",
+    "lint": "oxlint",
+    "screenshots": "bun scripts/screenshots.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "bun-types": "^1.4.2",
+    "lefthook": "^2.1.14",
+    "oxlint": "^1.83.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.0"
+  }
+}

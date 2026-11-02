@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <!-- App icon background, shared with the dashboard and Weather Map -->
+  <rect width="192" height="192" rx="42" fill="url(#bg)" stroke="#334155" stroke-width="4"/>
+
+  <!-- Sun rays -->
+  <g stroke="#38bdf8" stroke-width="16" stroke-linecap="round">
+    <line x1="96" y1="16" x2="96" y2="30"/>
+    <line x1="96" y1="162" x2="96" y2="176"/>
+    <line x1="16" y1="96" x2="30" y2="96"/>
+    <line x1="162" y1="96" x2="176" y2="96"/>
+    <line x1="39" y1="39" x2="49" y2="49"/>
+    <line x1="143" y1="143" x2="153" y2="153"/>
+    <line x1="39" y1="153" x2="49" y2="143"/>
+    <line x1="143" y1="49" x2="153" y2="39"/>
+  </g>
+
+  <!-- Clock face as the sun, hands at three o'clock: axis-aligned so they stay crisp at 16px -->
+  <circle cx="96" cy="96" r="50" fill="#e2e8f0"/>
+  <g stroke="#0f172a" stroke-width="14" stroke-linecap="round">
+    <line x1="96" y1="96" x2="96" y2="64"/>
+    <line x1="96" y1="96" x2="120" y2="96"/>
+  </g>
+</svg>

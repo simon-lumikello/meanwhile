@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@dashboard": [
+        "./src/index.ts"
+      ],
+      "@dashboard/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.test.json"
+    },
+    {
+      "path": "./tsconfig.e2e.json"
+    }
+  ]
+}

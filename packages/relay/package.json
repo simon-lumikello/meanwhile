@@ -1,0 +1,16 @@
+{
+  "name": "@simon-lumikello/meanwhile-relay",
+  "private": true,
+  "type": "module",
+  "description": "Server-side same-origin relays for browser libraries: live aircraft positions.",
+  "exports": {
+    "./aircraft": "./src/aircraft.ts",
+    "./node": "./src/node.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "vite": "^8.3.0"
+  },
+  "license": "MIT",
+  "author": "Simon Lumikello"
+}

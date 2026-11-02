@@ -1,0 +1,50 @@
+name: Nightly
+
+# The dashboard's ambient-controller browser suite, too slow for every pull request. Scheduled runs
+# are skipped when main has had no commits in the last day; run it on demand with
+# `gh workflow run nightly.yml`.
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ambient-controller:
+    name: Ambient controller browser suite
+    runs-on: ubuntu-latest
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 50
+
+      - name: Skip when main is unchanged
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] && [ -z "$(git log --since='25 hours ago' --format=%H)" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "No commits in the last 25 hours; skipping."
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: ./.github/actions/setup
+        if: steps.changed.outputs.run == 'true'
+        with:
+          browsers: 'true'
+      - if: steps.changed.outputs.run == 'true'
+        run: bun run test:dashboard:ambient-controller
+
+      - name: Upload browser diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: nightly-browser-diagnostics-${{ github.run_id }}
+          path: |
+            apps/dashboard/playwright-report
+            apps/dashboard/test-results
+          if-no-files-found: ignore

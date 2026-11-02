@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <clipPath id="tile"><rect width="192" height="192" rx="42"/></clipPath>
+  </defs>
+  <!-- App icon background, shared with the dashboard and Weather Clock -->
+  <rect width="192" height="192" rx="42" fill="url(#bg)"/>
+
+  <!-- Radar range rings spreading from a corner, in the rain echo colors; few and thick so they read at 16px -->
+  <g clip-path="url(#tile)">
+    <g fill="none" stroke-width="24">
+      <circle cx="28" cy="164" r="132" stroke="#2563eb"/>
+      <circle cx="28" cy="164" r="86" stroke="#22d3ee"/>
+    </g>
+    <circle cx="28" cy="164" r="40" fill="#cffafe"/>
+  </g>
+
+  <rect x="2" y="2" width="188" height="188" rx="40" fill="none" stroke="#334155" stroke-width="4"/>
+</svg>

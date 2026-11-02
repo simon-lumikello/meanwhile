@@ -1,0 +1,12 @@
+{
+  "url": "https://openwms.fmi.fi/geoserver/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=Radar:radar_finland_cappi_rate&STYLES=radar_rate&SRS=EPSG:3857&BBOX=3212072,9902702,3275406,9942702&WIDTH=380&HEIGHT=240&FORMAT=image/png&TRANSPARENT=TRUE",
+  "capturedAt": "2026-09-20T11:24:28.469Z",
+  "date": "Sun, 20 Sep 2026 11:24:28 GMT",
+  "latitude": 66.167,
+  "longitude": 29.139,
+  "deltaMeters": 20000,
+  "width": 380,
+  "height": 240,
+  "name": "Ruka",
+  "style": "radar_rate"
+}

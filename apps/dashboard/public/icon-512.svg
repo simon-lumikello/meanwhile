@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="laser" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)" stroke="#334155" stroke-width="8"/>
+  <!-- Timeline swimlanes graphic -->
+  <rect x="64" y="120" width="384" height="56" rx="16" fill="#1e293b" opacity="0.8"/>
+  <rect x="180" y="130" width="160" height="36" rx="10" fill="#3b82f6"/>
+
+  <rect x="64" y="200" width="384" height="56" rx="16" fill="#1e293b" opacity="0.8"/>
+  <rect x="100" y="210" width="200" height="36" rx="10" fill="#ec4899"/>
+
+  <rect x="64" y="280" width="384" height="56" rx="16" fill="#1e293b" opacity="0.8"/>
+  <rect x="220" y="290" width="180" height="36" rx="10" fill="#10b981"/>
+
+  <rect x="64" y="360" width="384" height="56" rx="16" fill="#1e293b" opacity="0.8"/>
+  <rect x="140" y="370" width="220" height="36" rx="10" fill="#38bdf8"/>
+
+  <!-- Glowing Playhead -->
+  <line x1="256" y1="80" x2="256" y2="450" stroke="url(#laser)" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="256" cy="80" r="16" fill="#f43f5e"/>
+</svg>

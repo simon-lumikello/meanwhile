@@ -1,0 +1,30 @@
+@import "tailwindcss";
+/* Library components use Tailwind utilities; scan their source (workspace packages in ../../../packages). */
+@source "../../../packages/ambient/src";
+@source "../../../packages/radar/src";
+@source "../../../packages/ui/src";
+
+/* Shared UI components style dark mode with `dark:`; the app root carries the theme class. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Match the dashboard's typography so the shared components render identically. */
+@theme {
+  --font-sans: 'Inter', 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root { color-scheme: dark; font-family: var(--font-sans); background: #07111f; }
+body { margin: 0; }
+.ambient-app { min-height: 100vh; background: #07111f; color: #f8fafc; }
+.settings-field { display: grid; gap: .42rem; color: #dbeafe; font-size: .84rem; font-weight: 650; }
+.settings-field > span { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+.settings-field output { color: #93c5fd; font-size: .78rem; font-variant-numeric: tabular-nums; }
+.settings-range { width: 100%; accent-color: #60a5fa; cursor: pointer; }
+.settings-toggles { display: grid; gap: .55rem; }
+.settings-toggles label { display: flex; align-items: center; gap: .7rem; border: 1px solid rgb(71 85 105 / .75); border-radius: .68rem; padding: .66rem .72rem; background: rgb(15 23 42 / .52); cursor: pointer; }
+.settings-toggles label:hover { border-color: #64748b; }
+.settings-toggles input { width: 1rem; height: 1rem; accent-color: #60a5fa; }
+.settings-toggles span { display: grid; gap: .12rem; }
+.settings-toggles strong { color: #e2e8f0; font-size: .84rem; }
+.settings-toggles small { color: #8fa1bd; font-size: .74rem; line-height: 1.3; }
+.ambient-radar { overflow: hidden; border: 1px solid rgb(255 255 255 / .1); border-radius: 1rem; background: rgb(15 23 42 / .7); box-shadow: 0 25px 50px -12px rgb(0 0 0 / .25); }

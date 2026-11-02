@@ -1,0 +1,14 @@
+**/node_modules
+**/dist
+**/test-dist
+.git
+.gitignore
+.agents
+.claude
+scratch
+test-results
+playwright-report
+*.log
+*.md
+docs/screenshots
+.env*

@@ -1,0 +1,38 @@
+// The root is deliberately core-only. Consumers needing network adapters or
+// presentation or query imports use the explicit `providers`, `query`, and `react` entrypoints.
+export type {
+  AuroraDayVisibilityStatus,
+  AuroraKpPoint,
+  AuroraVisibilityStatus,
+  CelestialLightSource,
+  DailyOutlook,
+  DaylightOptions,
+  DaylightWindow,
+  DaypartPoint,
+  HourlyRainPoint,
+  HourlyWeatherPoint,
+  RestOfTodayForecast,
+  TomorrowForecast,
+  WeatherSymbol,
+  WindData,
+} from './core'
+export {
+  calculateDailyOutlook,
+  calculateDaylightWindow,
+  calculateRainSummary,
+  calculateRestOfTodayForecast,
+  calculateTomorrowForecast,
+  evaluateAuroraVisibility,
+  findKpForTimestamp,
+  formatTimeLabel,
+  getCelestialLightSource,
+  getDominantSymbol,
+  getKpThresholdForLatitude,
+  getLunarPosition,
+  getSolarPosition,
+  getSolarTimes,
+  getWeatherSymbolLabel,
+  isDaylight,
+  isSkyFavorableForAurora,
+  normalizeNightSymbol,
+} from './core'

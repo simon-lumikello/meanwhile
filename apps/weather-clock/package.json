@@ -1,0 +1,26 @@
+{
+  "name": "weather-clock",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "bun check && vite build",
+    "preview": "vite preview",
+    "test:e2e": "bun playwright test"
+  },
+  "dependencies": {
+    "@simon-lumikello/meanwhile-ambient": "workspace:*",
+    "@simon-lumikello/meanwhile-radar": "workspace:*",
+    "@simon-lumikello/meanwhile-ui": "workspace:*",
+    "@simon-lumikello/meanwhile-weather": "workspace:*",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-query": "^5.103.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vitejs/plugin-react": "^6.1.1",
+    "lucide-react": "^1.48.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.0"
+  }
+}
