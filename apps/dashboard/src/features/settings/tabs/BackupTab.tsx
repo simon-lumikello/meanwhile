@@ -100,7 +100,7 @@ export const BackupTab: React.FC<BackupTabProps> = ({
   return (
     <div className="space-y-6">
       {/* Export Section */}
-      <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-3">
+      <div data-setting-id="backup-export" className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-3">
         <div className="flex items-center gap-2">
           <Download size={16} className="text-indigo-500" />
           <h4 className="text-sm font-bold text-slate-900 dark:text-white">Export Configuration</h4>
@@ -123,7 +123,7 @@ export const BackupTab: React.FC<BackupTabProps> = ({
       </div>
 
       {/* Import Section */}
-      <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-3">
+      <div data-setting-id="backup-import" className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-3">
         <div className="flex items-center gap-2">
           <Upload size={16} className="text-indigo-500" />
           <h4 className="text-sm font-bold text-slate-900 dark:text-white">Import Configuration</h4>
@@ -173,7 +173,7 @@ export const BackupTab: React.FC<BackupTabProps> = ({
       </div>
 
       {/* Privacy & Storage Guarantee */}
-      <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-500/20 space-y-2.5">
+      <div data-setting-id="privacy-storage" className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-500/20 space-y-2.5">
         <div className="flex items-center gap-2">
           <ShieldCheck size={16} className="text-indigo-600 dark:text-indigo-400" />
           <h4 className="text-xs font-bold text-slate-900 dark:text-white">
@@ -206,7 +206,7 @@ export const BackupTab: React.FC<BackupTabProps> = ({
       </div>
 
       {/* Reset to Defaults */}
-      <div className="pt-2 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">
+      <div data-setting-id="backup-reset" className="pt-2 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
           <AlertTriangle size={13} />
           <span className="text-[11px]">Looking for a clean slate?</span>

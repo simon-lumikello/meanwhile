@@ -24,7 +24,7 @@ export const DisplayTab: React.FC<DisplayTabProps> = ({
         </div>
 
         {/* Theme Setting */}
-        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-3">
+        <div data-setting-id="theme" className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-3">
           <div>
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">Interface Theme</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -61,7 +61,7 @@ export const DisplayTab: React.FC<DisplayTabProps> = ({
         </div>
 
         {/* Orientation Setting */}
-        <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
+        <div data-setting-id="orientation" className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
           <div className="pr-4">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">Timeline Orientation</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
@@ -86,7 +86,7 @@ export const DisplayTab: React.FC<DisplayTabProps> = ({
         </div>
 
         {/* 24h vs 12h clock */}
-        <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
+        <div data-setting-id="clock-format" className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
           <div>
             <div className="flex items-center gap-1.5">
               <Clock size={14} className="text-indigo-500" />
@@ -120,7 +120,7 @@ export const DisplayTab: React.FC<DisplayTabProps> = ({
         </div>
 
         {/* Grid Line Contrast */}
-        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-3">
+        <div data-setting-id="grid-lines" className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-3">
           <div>
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">Grid Line Contrast</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -153,7 +153,7 @@ export const DisplayTab: React.FC<DisplayTabProps> = ({
         </div>
 
         {/* Calendar Zebra Striping */}
-        <div className="flex items-start justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
+        <div data-setting-id="zebra-striping" className="flex items-start justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
           <div className="pr-4">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">Calendar Zebra Striping</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
@@ -174,7 +174,7 @@ export const DisplayTab: React.FC<DisplayTabProps> = ({
         </div>
 
         {/* Past Event Muting */}
-        <div className="flex items-start justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
+        <div data-setting-id="mute-past-events" className="flex items-start justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
           <div className="pr-4">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">Mute Past Events</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
@@ -205,7 +205,7 @@ export const DisplayTab: React.FC<DisplayTabProps> = ({
         </div>
 
         {/* Kiosk Mode Toggle */}
-        <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
+        <div data-setting-id="kiosk-mode" className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10">
           <div className="pr-4">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">Always-on Kiosk Mode</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
@@ -226,7 +226,7 @@ export const DisplayTab: React.FC<DisplayTabProps> = ({
         </div>
 
         {/* Kiosk Idle Reset Timer */}
-        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-2">
+        <div data-setting-id="idle-reset" className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-2">
           <div className="flex items-center justify-between">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">Kiosk Auto-Reset to Today</h4>
             <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 tabular-nums">

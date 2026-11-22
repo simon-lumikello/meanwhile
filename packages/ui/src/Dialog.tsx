@@ -2,7 +2,7 @@ import { useEffect, useId, useLayoutEffect, useRef, type CSSProperties, type Rea
 import { Button } from './Button'
 
 export type DialogPlacement = 'center' | 'end'
-export type DialogSize = 'sm' | 'md' | 'lg'
+export type DialogSize = 'sm' | 'md' | 'lg' | 'xl'
 
 export interface DialogProps {
   open: boolean
@@ -20,6 +20,11 @@ export interface DialogProps {
   children?: ReactNode
   /** `center` is a modal card; `end` is a full-height drawer on the inline end side. */
   placement?: DialogPlacement
+  /**
+   * Panel width. A centred `xl` card is a workspace (a settings dialog with its own navigation):
+   * it also takes a fixed height, so switching what it shows never makes it jump, and its body
+   * gets a definite height for content that lays out its own scrolling columns.
+   */
   size?: DialogSize
   /** Accessible name of the header close button. */
   closeLabel?: string
@@ -41,8 +46,8 @@ const openDialogs: object[] = []
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 const PANEL_SIZE: Record<DialogPlacement, Record<DialogSize, string>> = {
-  center: { sm: 'max-w-md', md: 'max-w-lg', lg: 'max-w-2xl' },
-  end: { sm: 'sm:w-[28rem]', md: 'sm:w-[36rem]', lg: 'sm:w-[680px] lg:w-[720px]' },
+  center: { sm: 'max-w-md', md: 'max-w-lg', lg: 'max-w-2xl', xl: 'max-w-4xl h-[min(90dvh,48rem)]' },
+  end: { sm: 'sm:w-[28rem]', md: 'sm:w-[36rem]', lg: 'sm:w-[680px] lg:w-[720px]', xl: 'sm:w-[48rem] lg:w-[56rem]' },
 }
 
 function CloseIcon() {

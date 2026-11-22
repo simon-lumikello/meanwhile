@@ -12,7 +12,7 @@ import {
   type SwimlaneType,
   type DashboardConfig,
 } from '@dashboard/features/settings'
-import { SettingsDrawer } from '@dashboard/features/settings/SettingsDrawer'
+import { SettingsDialog } from '@dashboard/features/settings/SettingsDialog'
 
 describe('Lane Configuration & Weather Restoration', () => {
   it('creates a complete, valid weather lane with createDefaultWeatherLane', () => {
@@ -80,7 +80,7 @@ describe('Lane Configuration & Weather Restoration', () => {
     const defaultCity = pickDemoCity()
     const targetType: SwimlaneType = 'weather'
 
-    // Simulation of SettingsDrawer conversion logic
+    // Simulation of SettingsDialog conversion logic
     const convertedLane: SwimlaneConfig = {
       ...calendarLane,
       type: targetType,
@@ -181,7 +181,7 @@ describe('Adding Multiple Lanes at Once & Saving Settings', () => {
     const initialConfig = loadDashboardConfig()
     const initialCount = initialConfig.swimlanes.length
 
-    // 2. Simulate opening SettingsDrawer: a draft editingConfig is created from config
+    // 2. Simulate opening SettingsDialog: a draft editingConfig is created from config
     let editingConfig: DashboardConfig = { ...initialConfig }
 
     // Helper simulating LanesTab updateSwimlane
@@ -247,7 +247,7 @@ describe('Adding Multiple Lanes at Once & Saving Settings', () => {
       },
     })
 
-    // 5. User clicks "Save Changes" in the drawer (invoking onSaveConfig)
+    // 5. User clicks "Save Changes" in the dialog (invoking onSaveConfig)
     saveDashboardConfig(editingConfig)
 
     // 6. Simulate page reload / subsequent loadDashboardConfig call
@@ -286,7 +286,7 @@ describe('Adding Multiple Lanes at Once & Saving Settings', () => {
     expect(defaultDad!.title).toBe('Dad')
   })
 
-  it('faithfully renders all newly added lanes and their calendar URLs inside SettingsDrawer UI', () => {
+  it('faithfully renders all newly added lanes and their calendar URLs inside the SettingsDialog UI', () => {
     // Prepare a config with multiple added lanes with calendar URLs
     const lane1: SwimlaneConfig = {
       ...createDefaultCalendarLane(0, 'lane-test-1'),
@@ -304,9 +304,9 @@ describe('Adding Multiple Lanes at Once & Saving Settings', () => {
       swimlanes: [lane1, lane2],
     }
 
-    // Render SettingsDrawer component with multiple lanes
+    // Render SettingsDialog component with multiple lanes
     const html = renderToString(
-      React.createElement(SettingsDrawer, {
+      React.createElement(SettingsDialog, {
         isOpen: true,
         onClose: () => {},
         config: testConfig,

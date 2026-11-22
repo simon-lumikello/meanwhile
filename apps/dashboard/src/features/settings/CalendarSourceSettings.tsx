@@ -66,7 +66,7 @@ export function CalendarSourceSettings({ lane, onSourceChange, onImportPendingCh
   }
 
   return (
-    <div className="space-y-2 pt-2 border-t border-slate-200/80 dark:border-white/5">
+    <div data-setting-id="calendar-source" className="space-y-2 pt-2 border-t border-slate-200/80 dark:border-white/5">
       <div className="flex items-center justify-between text-xs gap-2">
         <span className="font-medium text-slate-700 dark:text-slate-300">Calendar source</span>
         <SettingsSelect

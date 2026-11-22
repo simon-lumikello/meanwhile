@@ -19,7 +19,7 @@ test.describe('Self-hosting guide', () => {
     await page.goto('/')
 
     await page.locator('header').getByRole('button', { name: 'Settings' }).click()
-    await page.getByRole('button', { name: /Backup/ }).click()
+    await page.getByRole('tab', { name: /Backup/ }).click()
     await page.getByRole('button', { name: 'Self-Hosting Guide' }).click()
     const guide = page.getByRole('dialog', { name: 'Self-Hosting Guide' })
     await expect(guide).toBeVisible()

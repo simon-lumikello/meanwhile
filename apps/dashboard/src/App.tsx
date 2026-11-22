@@ -25,7 +25,7 @@ import { useWeatherForecast, useRainAlert, useRadarRainRate, useAuroraForecast, 
 import { useWallClock } from '@dashboard/hooks/useWallClock'
 import { HeaderBar } from '@dashboard/components/header/HeaderBar'
 import { TimelineGrid, MobileLaneSelector, EventDetailModal } from '@dashboard/features/timeline'
-import { SettingsDrawer } from '@dashboard/features/settings'
+import { SettingsDialog } from '@dashboard/features/settings'
 import { WeatherRadarOverlay } from '@dashboard/components/weather/WeatherRadarOverlay'
 import { AmbientController } from '@dashboard/components/ambient/AmbientController'
 import { useThunderstormQuery } from '@simon-lumikello/meanwhile-radar/query'
@@ -412,8 +412,8 @@ export function App() {
         )
       })()}
 
-      {/* Settings Configuration Drawer */}
-      <SettingsDrawer
+      {/* Settings Dialog */}
+      <SettingsDialog
         key={isSettingsOpen ? 'open' : 'closed'}
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}

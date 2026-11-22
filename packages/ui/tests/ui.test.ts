@@ -80,6 +80,13 @@ describe('Dialog', () => {
     expect(html).toContain('justify-end')
     expect(html).toContain('h-full')
   })
+
+  it('gives a centred workspace dialog a fixed height so its content never makes it jump', () => {
+    const html = renderToStaticMarkup(React.createElement(Dialog, { open: true, onClose: () => {}, title: 'Settings', size: 'xl' }))
+    expect(html).toContain('items-center')
+    expect(html).toContain('max-w-4xl')
+    expect(html).toContain('h-[min(90dvh,48rem)]')
+  })
 })
 
 describe('LocationSearch', () => {
