@@ -350,7 +350,10 @@ export interface WeatherProvider {
    - Copy-paste ready Docker `docker run` and `docker-compose.yml` configurations.
    - Raspberry Pi kiosk auto-start instructions.
    - Local development instructions with Bun.
-4. **Settings Drawer:**
+4. **Settings Dialog (`SettingsDialog`):**
+   - A centred workspace dialog (`Dialog` size `xl`): wide enough for a section rail beside the settings, narrow enough that rows don't stretch, and a fixed height so switching sections never makes it jump. Below `md` the rail folds into a tab strip.
+   - Sections: Lanes, Display, Ambient, Weather Map (only where radar is available), and Backup, each with a one-line summary.
+   - Quick search above the sections matches every setting by its name, its description, and the words people use instead (`settingsSearch.ts`: "dark mode" finds the theme, "planes" the flight traffic), forgiving a typo. Picking a result opens its section, scrolls the row (`data-setting-id`) into view, and outlines it; a setting hidden behind a switch lands on that switch with a note. Escape clears the search before it closes the dialog.
    - Reorder lanes, toggle visibility, customize titles, swatches, and icons.
    - Location autocomplete search for weather coordinates with auto-detection vs manual override.
    - Full config JSON export, import, and factory reset.

@@ -1,6 +1,6 @@
 import { test, expect, seedDashboardConfig } from './test-helpers'
 
-test.describe('Settings Drawer & Configuration Persistence', () => {
+test.describe('Settings Dialog & Configuration Persistence', () => {
   test('renders the dashboard radar canvas at its production viewport size', async ({ page }) => {
     await seedDashboardConfig(page, { weatherMap: { renderMode: 'radar-blocks' } })
     await page.goto('/')
@@ -29,39 +29,41 @@ test.describe('Settings Drawer & Configuration Persistence', () => {
     await seedDashboardConfig(page)
     await page.goto('/')
 
-    // Open settings drawer
+    // Open settings
     await page.locator('header').getByRole('button', { name: 'Settings' }).click()
     const drawer = page.locator('h2', { hasText: 'Dashboard Settings' })
     await expect(drawer).toBeVisible()
 
-    // Verify Tab buttons
-    const tabsContainer = page.locator('button', { hasText: 'Lanes' }).locator('..')
-    await expect(tabsContainer.getByRole('button', { name: /Lanes/ })).toBeVisible()
-    await expect(tabsContainer.getByRole('button', { name: /Display/ })).toBeVisible()
-    await expect(tabsContainer.getByRole('button', { name: /Ambient/ })).toBeVisible()
-    await expect(tabsContainer.getByRole('button', { name: /Weather Map/ })).toBeVisible()
-    await expect(tabsContainer.getByRole('button', { name: /Backup/ })).toBeVisible()
+    // The sections, Lanes first
+    const tabsContainer = page.getByRole('tablist', { name: 'Settings sections' })
+    await expect(tabsContainer.getByRole('tab', { name: /Lanes/ })).toHaveAttribute('aria-selected', 'true')
+    await expect(tabsContainer.getByRole('tab', { name: /Display/ })).toBeVisible()
+    await expect(tabsContainer.getByRole('tab', { name: /Ambient/ })).toBeVisible()
+    await expect(tabsContainer.getByRole('tab', { name: /Weather Map/ })).toBeVisible()
+    await expect(tabsContainer.getByRole('tab', { name: /Backup/ })).toBeVisible()
 
     // Switch to Display tab
-    await tabsContainer.getByRole('button', { name: /Display/ }).click()
+    await tabsContainer.getByRole('tab', { name: /Display/ }).click()
+    await expect(tabsContainer.getByRole('tab', { name: /Display/ })).toHaveAttribute('aria-selected', 'true')
     await expect(page.getByText('Appearance & Orientation')).toBeVisible()
     await expect(page.getByText('Timeline Orientation')).toBeVisible()
     await expect(page.locator('select')).toHaveCount(0)
 
-    // Switch to Ambient tab
-    await tabsContainer.getByRole('button', { name: /Ambient/ }).click()
+    // Arrow keys move between sections
+    await tabsContainer.getByRole('tab', { name: /Display/ }).press('ArrowDown')
+    await expect(tabsContainer.getByRole('tab', { name: /Ambient/ })).toBeFocused()
     await expect(page.getByText('Ambient Night Dimmer')).toBeVisible()
 
     // Switch to Weather Map tab
-    await tabsContainer.getByRole('button', { name: /Weather Map/ }).click()
+    await tabsContainer.getByRole('tab', { name: /Weather Map/ }).click()
     await expect(page.getByText('Show on timeline')).toBeVisible()
     await expect(page.getByRole('group', { name: 'Weather map size' })).toBeVisible()
 
     // Switch to Backup tab
-    await tabsContainer.getByRole('button', { name: /Backup/ }).click()
+    await tabsContainer.getByRole('tab', { name: /Backup/ }).click()
     await expect(page.getByText('Export Configuration')).toBeVisible()
 
-    // Close drawer
+    // Close the dialog
     await page.getByRole('button', { name: 'Close Settings' }).click()
     await expect(drawer).not.toBeVisible()
   })
@@ -72,8 +74,7 @@ test.describe('Settings Drawer & Configuration Persistence', () => {
 
     // Open settings
     await page.locator('header').getByRole('button', { name: 'Settings' }).click()
-    const tabsContainer = page.locator('button', { hasText: 'Lanes' }).locator('..')
-    await tabsContainer.getByRole('button', { name: /Display/ }).click()
+    await page.getByRole('tab', { name: /Display/ }).click()
 
     // Toggle 24-hour clock checkbox off (switching to 12h format)
     const clockCheckbox = page.locator('input[type="checkbox"]').first()
@@ -138,7 +139,7 @@ test.describe('Settings Drawer & Configuration Persistence', () => {
     await expect(page.getByRole('heading', { name: 'Dad', level: 3 })).toBeVisible()
   })
 
-  test('Escape or a click outside the settings drawer discards pending edits', async ({ page }) => {
+  test('Escape or a click outside the settings dialog discards pending edits', async ({ page }) => {
     await seedDashboardConfig(page)
     await page.goto('/')
     const drawerTitle = page.locator('h2', { hasText: 'Dashboard Settings' })
@@ -148,12 +149,44 @@ test.describe('Settings Drawer & Configuration Persistence', () => {
       await expect(drawerTitle).toBeVisible()
       await page.locator('input[value="Dad"]').fill('Discarded Name')
       if (dismiss === 'escape') await page.keyboard.press('Escape')
-      // The drawer docks to the right; the far left of the window is backdrop.
+      // The dialog is a centred card; the far left of the window is backdrop.
       else await page.mouse.click(5, 300)
       await expect(drawerTitle).not.toBeVisible()
       await expect(page.getByRole('heading', { name: 'Dad', level: 3 })).toBeVisible()
       await expect(page.getByRole('heading', { name: 'Discarded Name', level: 3 })).not.toBeVisible()
     }
+  })
+
+  test('quick search finds a setting by another name and jumps to it', async ({ page }) => {
+    await seedDashboardConfig(page)
+    await page.goto('/')
+    await page.locator('header').getByRole('button', { name: 'Settings' }).click()
+    const dialog = page.getByRole('dialog', { name: 'Dashboard Settings' })
+    const search = dialog.getByRole('combobox', { name: 'Search settings' })
+
+    // Escape clears the search and keeps the dialog open.
+    await search.fill('am pm')
+    await expect(dialog.getByRole('option').first()).toContainText('24-hour clock format')
+    await search.press('Escape')
+    await expect(search).toHaveValue('')
+    await expect(dialog).toBeVisible()
+
+    // Enter opens the highlighted result: its section, its row, and its control focused.
+    await search.fill('am pm')
+    await search.press('Enter')
+    await expect(dialog.getByRole('tab', { name: /Display/ })).toHaveAttribute('aria-selected', 'true')
+    const clockRow = dialog.locator('[data-setting-id="clock-format"]')
+    await expect(clockRow).toBeInViewport()
+    await expect(clockRow.getByRole('checkbox')).toBeFocused()
+
+    // A tap on a result works the same way.
+    await search.fill('planes')
+    await dialog.getByRole('option', { name: /Live flight traffic/ }).click()
+    await expect(dialog.getByRole('tab', { name: /Weather Map/ })).toHaveAttribute('aria-selected', 'true')
+    await expect(dialog.locator('[data-setting-id="map-flights"]')).toBeInViewport()
+
+    await search.fill('quokka')
+    await expect(dialog.getByText('No settings match')).toBeVisible()
   })
 
   test('privacy details open above settings and close alone', async ({ page }) => {
@@ -196,7 +229,7 @@ test.describe('Settings Drawer & Configuration Persistence', () => {
     expect(weatherLane).toMatchObject({ weatherLocation: 'Tampere', weatherLatitude: 61.4978, weatherLongitude: 23.761 })
   })
 
-  test('canceling settings drawer discards pending edits', async ({ page }) => {
+  test('canceling the settings dialog discards pending edits', async ({ page }) => {
     await seedDashboardConfig(page)
     await page.goto('/')
 

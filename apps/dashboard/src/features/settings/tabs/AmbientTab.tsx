@@ -29,7 +29,7 @@ export const AmbientTab: React.FC<AmbientTabProps> = ({
     <div className="space-y-6">
       {/* Ambient Night Dimmer Main Card */}
       <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 space-y-4">
-        <div className="flex items-center justify-between">
+        <div data-setting-id="night-dimmer" className="flex items-center justify-between">
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center shrink-0 mt-0.5">
               <Moon size={18} />
@@ -57,7 +57,7 @@ export const AmbientTab: React.FC<AmbientTabProps> = ({
         {editingConfig.nightMode.enabled && (
           <>
             {/* Schedule Section */}
-            <div className="pt-3 border-t border-slate-200 dark:border-white/5 space-y-2.5">
+            <div data-setting-id="night-schedule" className="pt-3 border-t border-slate-200 dark:border-white/5 space-y-2.5">
               <div className="flex items-center gap-1.5">
                 <Clock size={14} className="text-indigo-500" />
                 <h5 className="text-xs font-bold text-slate-900 dark:text-white">
@@ -109,7 +109,7 @@ export const AmbientTab: React.FC<AmbientTabProps> = ({
             </div>
 
             {/* Event Conclusion Trigger */}
-            <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">
+            <div data-setting-id="dim-after-last-event" className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">
               <div className="pr-4">
                 <h5 className="text-xs font-bold text-slate-900 dark:text-white">
                   Show weather when events conclude
@@ -135,7 +135,7 @@ export const AmbientTab: React.FC<AmbientTabProps> = ({
             </div>
 
             {/* Week Ahead Cards */}
-            <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">
+            <div data-setting-id="week-ahead" className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">
               <div className="pr-4">
                 <h5 className="text-xs font-bold text-slate-900 dark:text-white">
                   Show the week ahead
@@ -171,7 +171,7 @@ export const AmbientTab: React.FC<AmbientTabProps> = ({
               </div>
 
               {/* Background Dim Level Slider */}
-              <div className="space-y-1.5">
+              <div data-setting-id="background-dim" className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
                     Lock Screen Background Darkness
@@ -203,7 +203,7 @@ export const AmbientTab: React.FC<AmbientTabProps> = ({
               </div>
 
               {/* Screen Content Dim Level / Opacity Slider */}
-              <div className="space-y-1.5">
+              <div data-setting-id="card-dim" className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
                     Cards & Clock Visibility
@@ -236,7 +236,7 @@ export const AmbientTab: React.FC<AmbientTabProps> = ({
             </div>
 
             {/* Aurora Borealis Detection Toggle */}
-            <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">
+            <div data-setting-id="aurora-alerts" className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between">
               <div className="pr-4">
                 <div className="flex items-center gap-1.5">
                   <h5 className="text-xs font-bold text-slate-900 dark:text-white">

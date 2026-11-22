@@ -14,12 +14,13 @@ const SIZE_OPTIONS: { id: RadarWidgetSize; label: string }[] = [
 ]
 
 const ToggleRow: React.FC<{
+  settingId: string
   title: string
   description: string
   checked: boolean
   onChange: (checked: boolean) => void
-}> = ({ title, description, checked, onChange }) => (
-  <label className="flex items-center justify-between gap-4 py-3 cursor-pointer">
+}> = ({ settingId, title, description, checked, onChange }) => (
+  <label data-setting-id={settingId} className="flex items-center justify-between gap-4 py-3 cursor-pointer">
     <div>
       <h5 className="text-xs font-bold text-slate-900 dark:text-white">{title}</h5>
       <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">{description}</p>
@@ -53,18 +54,20 @@ export const RadarTab: React.FC<RadarTabProps> = ({
     <div className="space-y-3">
       <div className="px-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 divide-y divide-slate-200 dark:divide-white/5">
         <ToggleRow
+          settingId="map-on-timeline"
           title="Show on timeline"
           description="A live weather map floating in the corner of the timeline."
           checked={weatherMap.showOnTimeline}
           onChange={(showOnTimeline) => update({ showOnTimeline })}
         />
         <ToggleRow
+          settingId="map-on-ambient"
           title="Show on ambient screen"
           description="A weather map card next to the forecast cards."
           checked={weatherMap.showOnAmbient}
           onChange={(showOnAmbient) => update({ showOnAmbient })}
         />
-        <div className="flex items-center justify-between gap-4 py-3">
+        <div data-setting-id="map-size" className="flex items-center justify-between gap-4 py-3">
           <div>
             <h5 className="text-xs font-bold text-slate-900 dark:text-white">Size</h5>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
@@ -92,6 +95,7 @@ export const RadarTab: React.FC<RadarTabProps> = ({
           </div>
         </div>
         <ToggleRow
+          settingId="map-flights"
           title="Live flight traffic"
           description="Airplanes over the map, from adsb.lol."
           checked={weatherMap.showAirplanes}

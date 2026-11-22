@@ -164,9 +164,9 @@ export const LanesTab: React.FC<LanesTabProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div data-setting-id="lanes-add" className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          Configure family calendar feeds, custom colors, and weather providers.
+          Each lane is a row on the timeline: a person’s calendar or the weather.
         </p>
         <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
           {!hasWeatherLane && (
@@ -209,7 +209,7 @@ export const LanesTab: React.FC<LanesTabProps> = ({
               <div className="flex items-center justify-between gap-3 mb-3">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   {/* Icon picker dropdown */}
-                  <div className="relative">
+                  <div data-setting-id="lane-icon" className="relative">
                     <button
                       type="button"
                       onClick={() =>
@@ -257,7 +257,9 @@ export const LanesTab: React.FC<LanesTabProps> = ({
                   </div>
 
                   <input
+                    data-setting-id="lane-name"
                     type="text"
+                    aria-label="Lane name"
                     value={lane.title}
                     onChange={(e) => updateSwimlane(lane.id, { title: e.target.value })}
                     className="bg-transparent font-bold text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded px-2 py-0.5 w-full"
@@ -265,7 +267,7 @@ export const LanesTab: React.FC<LanesTabProps> = ({
                 </div>
 
                 {/* Reorder and Toggle Controls */}
-                <div className="flex items-center gap-1">
+                <div data-setting-id="lane-order" className="flex items-center gap-1">
                   <Button
                     variant="ghost"
                     onClick={() => moveSwimlane(idx, 'up')}
@@ -301,7 +303,7 @@ export const LanesTab: React.FC<LanesTabProps> = ({
               </div>
 
               {/* Color Palette Presets */}
-              <div className="flex items-center gap-1.5 mb-3">
+              <div data-setting-id="lane-color" className="flex items-center gap-1.5 mb-3">
                 <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 mr-1">Color:</span>
                 {PRESET_COLORS.map((preset) => (
                   <button
@@ -319,7 +321,7 @@ export const LanesTab: React.FC<LanesTabProps> = ({
               </div>
 
               {/* Lane Type Selection */}
-              <div className="flex items-center justify-between text-xs pt-2.5 mb-2 border-t border-slate-200/80 dark:border-white/5">
+              <div data-setting-id="lane-type" className="flex items-center justify-between text-xs pt-2.5 mb-2 border-t border-slate-200/80 dark:border-white/5">
                 <span className="text-slate-700 dark:text-slate-300 font-medium">Lane Type</span>
                 <SettingsSelect
                   label="Lane type"
@@ -375,7 +377,7 @@ export const LanesTab: React.FC<LanesTabProps> = ({
               {/* Data Source Configuration */}
               {lane.type === 'weather' ? (
                 <div className="space-y-2 pt-2 border-t border-slate-200/40 dark:border-white/5">
-                  <div className="space-y-1">
+                  <div data-setting-id="weather-provider" className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-700 dark:text-slate-300 font-medium">Weather Provider</span>
                       <SettingsSelect
@@ -405,7 +407,7 @@ export const LanesTab: React.FC<LanesTabProps> = ({
                   </div>
 
                   {/* Location Mode & Selection */}
-                  <div className="space-y-2 pt-2 border-t border-slate-200/40 dark:border-white/5">
+                  <div data-setting-id="weather-location" className="space-y-2 pt-2 border-t border-slate-200/40 dark:border-white/5">
                     <div className="flex items-center justify-between text-xs">
                       <div>
                         <span className="text-slate-700 dark:text-slate-300 font-medium">Location Mode</span>
@@ -539,7 +541,7 @@ export const LanesTab: React.FC<LanesTabProps> = ({
                     return (
                       <>
                         {/* Precipitation Proximity Alerts Toggle */}
-                        <div className={`flex items-center justify-between text-xs pt-1 border-t border-slate-200/40 dark:border-white/5 ${!isRadarSupportedForLane ? 'opacity-60' : ''}`}>
+                        <div data-setting-id="rain-alerts" className={`flex items-center justify-between text-xs pt-1 border-t border-slate-200/40 dark:border-white/5 ${!isRadarSupportedForLane ? 'opacity-60' : ''}`}>
                           <div>
                             <div className="flex items-center gap-1.5">
                               <span className="text-slate-700 dark:text-slate-300 font-medium">Precipitation Alerts</span>

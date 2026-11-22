@@ -107,7 +107,7 @@ test.describe('Header Bar & Navigation Interactions', () => {
     await expect(page.locator('html')).toHaveClass(/dark/)
   })
 
-  test('settings button in header opens settings drawer', async ({ page }) => {
+  test('settings button in header opens the settings dialog', async ({ page }) => {
     await seedDashboardConfig(page)
     await page.goto('/')
 
@@ -115,7 +115,7 @@ test.describe('Header Bar & Navigation Interactions', () => {
     await expect(settingsBtn).toBeVisible()
     await settingsBtn.click()
 
-    // Drawer should open and display title
+    // The dialog opens and shows its title
     const drawerTitle = page.locator('h2', { hasText: 'Dashboard Settings' })
     await expect(drawerTitle).toBeVisible()
 
@@ -124,7 +124,7 @@ test.describe('Header Bar & Navigation Interactions', () => {
     await expect(closeBtn).toBeVisible()
     await closeBtn.click()
 
-    // Drawer should close
+    // The dialog closes
     await expect(drawerTitle).not.toBeVisible()
   })
 })

@@ -22,7 +22,9 @@ from this package.
   badge (`inert: true`) that must look like a button.
 - **`Dialog`** — a modal card (`placement="center"`) or side drawer (`placement="end"`)
   with a title, optional eyebrow, description, icon, and a footer that stays visible
-  while the body scrolls. It closes on Escape, on its close button, and on a click
+  while the body scrolls. `size` runs `sm`, `md`, `lg`, and `xl`; a centred `xl` card is
+  a workspace for content with its own navigation and takes a fixed height, so it never
+  jumps as that content changes. It closes on Escape, on its close button, and on a click
   outside the panel; it moves focus into the panel, keeps Tab inside it, and returns
   focus to the opener. Dialogs opened later stack above earlier ones, and only the
   topmost reacts to Escape. Controls inside it that use Escape themselves (an open
